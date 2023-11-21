@@ -1,16 +1,20 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const morgan = require("morgan");
-const cors = require("cors");
-const bodyParser = require("body-parser");
+import express from "express";
+import mongoose from "mongoose";
+import morgan from "morgan";
+import cors from "cors";
+import bodyParser from "body-parser";
+import ProductRouter from "./routes/product_routes.js";
 
 const app = express();
 
 mongoose
-  .connect("mongodb://127.0.0.1:27017/admin", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(
+    "mongodb+srv://fyp:20F-04@cluster0.agwij.mongodb.net/?retryWrites=true&w=majority",
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
   .then((result) => {
     console.log("Connection Established");
   })
@@ -21,6 +25,8 @@ mongoose
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+app.use(ProductRouter);
 
 const PORT = process.env.PORT | 5000;
 
