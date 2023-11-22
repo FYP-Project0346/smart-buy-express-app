@@ -4,17 +4,20 @@ import morgan from "morgan";
 import cors from "cors";
 import bodyParser from "body-parser";
 import ProductRouter from "./routes/product_routes.js";
+import user_router from "./routes/user.js";
+import authRouter from "./routes/auth.js";
 
 const app = express();
 
+const remoteConnection =
+  "mongodb+srv://fyp:20F-04@cluster0.agwij.mongodb.net/?retryWrites=true&w=majority";
+const localConnection = "mongodb://127.0.0.1:27017/admin";
+
 mongoose
-  .connect(
-    "mongodb+srv://fyp:20F-04@cluster0.agwij.mongodb.net/?retryWrites=true&w=majority",
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    }
-  )
+  .connect(localConnection, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then((result) => {
     console.log("Connection Established");
   })
@@ -26,7 +29,9 @@ app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use(ProductRouter);
+app.use("/products", ProductRouter);
+app.use("/user", user_router);
+app.use("/auth", authRouter);
 
 const PORT = process.env.PORT | 5000;
 
