@@ -6,9 +6,10 @@ const productSchema = mongoose.Schema(
     desc: String,
     pic: [String],
     price: Number,
-    specifications: String,
+    spec: String,
     link: String,
     reviews: [String],
+    cat: String,
   },
   { timestamps: true }
 );

@@ -13,6 +13,11 @@ const remoteConnection =
   "mongodb+srv://fyp:20F-04@cluster0.agwij.mongodb.net/?retryWrites=true&w=majority";
 const localConnection = "mongodb://127.0.0.1:27017/admin";
 
+app.use(morgan("dev"));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(cors());
+
 mongoose
   .connect(localConnection, {
     useNewUrlParser: true,
@@ -24,10 +29,6 @@ mongoose
   .catch((err) => {
     console.log("Connection Failed");
   });
-
-app.use(morgan("dev"));
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
 
 app.use("/products", ProductRouter);
 app.use("/user", user_router);
