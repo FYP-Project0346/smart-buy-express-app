@@ -16,4 +16,8 @@ router.get(
   controller.uploadAllData
 );
 
+router.get("/updateCategories", authenticate, controller.updateCategories);
+router.get("/getCategories", controller.getCategories);
+router.get("/getByCategory", controller.getByCategory);
+
 export default router;
