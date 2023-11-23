@@ -4,10 +4,8 @@ import User from "../models/user.js";
 import { Constants } from "../constants.js";
 export const register = (req, res) => {
   try {
-    const pic = req.body.pic;
     const firstname = req.body.firstname;
     const lastname = req.body.lastname;
-    const phone = req.body.phone;
     const email = req.body.email;
     const password = req.body.password;
 
@@ -18,10 +16,8 @@ export const register = (req, res) => {
       }
 
       const user = new User({
-        pic,
         firstname,
         lastname,
-        phone,
         email,
         password: hashed,
       });
