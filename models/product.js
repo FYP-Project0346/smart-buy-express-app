@@ -2,14 +2,16 @@ import mongoose from "mongoose";
 
 const productSchema = mongoose.Schema(
   {
+    product_url: String,
     title: String,
-    desc: String,
-    pic: [String],
     price: Number,
-    spec: String,
-    link: String,
     reviews: [String],
-    cat: String,
+    stock: Boolean,
+    desc: String,
+    images: [String],
+    ratings: Number,
+    spec: String,
+    category: String,
   },
   { timestamps: true }
 );

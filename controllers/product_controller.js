@@ -49,9 +49,9 @@ export const getById = async (req, res) => {
 
 export const getByCategory = async (req, res) => {
   try {
-    const cat = req.query.cat;
+    const category = req.query.category;
     const data = await Product.find({
-      cat,
+      category,
     });
     res.status(200).json(data);
   } catch (error) {
@@ -60,6 +60,7 @@ export const getByCategory = async (req, res) => {
 };
 
 export const uploadAllData = async (req, res) => {
+  // This method uploads data from a local file in this project
   try {
     for (let i = 0; i < data.length; i++) {
       const product = await Product(data[i]);
@@ -91,7 +92,7 @@ export const updateCategories = async (req, res) => {
     for (let i = 0; i < data.length; i++) {
       let notFound = true;
       for (let j = 0; j < category.length; j++) {
-        if (data[i].cat === category[j]) {
+        if (data[i].category === category[j]) {
           notFound = false;
         }
       }

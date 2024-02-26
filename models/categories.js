@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const categorySchema = mongoose.Schema(
   {
-    cat: String,
+    category: String,
   },
   { timestamps: true }
 );
