@@ -28,7 +28,9 @@ export const saveAnArray = async (req, res) => {
 
 export const get = async (req, res) => {
   try {
-    let data = await Product.find();
+    let limit = req.query.limit || 12;
+    let skip = req.query.skip || 0;
+    let data = await Product.find().skip(skip).limit(limit);
     res.json(data);
   } catch (error) {
     res.status(400).json({ error });
