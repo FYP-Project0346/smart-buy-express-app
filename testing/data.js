@@ -63519,3 +63519,5 @@ Full mechanical keys, high-speed responseConflict-free design for all keysSpill-
     category: `video games`,
   },
 ];
+
+console.log(data.length);
