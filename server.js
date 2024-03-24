@@ -1,16 +1,17 @@
-import express from "express";
-import mongoose from "mongoose";
-import morgan from "morgan";
-import cors from "cors";
-import bodyParser from "body-parser";
-import ProductRouter from "./routes/product_routes.js";
-import user_router from "./routes/user.js";
-import authRouter from "./routes/auth.js";
+const express = require("express");
+const mongoose = require("mongoose");
+const morgan = require("morgan");
+const cors = require("cors");
+const bodyParser = require("body-parser");
+const {ProductRouter} = require("./routes/product_routes.js");
+const {user_router} = require("./routes/user.js");
+const {authRouter} = require("./routes/auth.js");
+const {priceTrackerRouter} = require("./routes/price_tracker.js");
 
 const app = express();
 
 const remoteConnection =
-  "mongodb+srv://fyp:20F-04@cluster0.agwij.mongodb.net/?retryWrites=true&w=majority";
+  "mongodb+srv://fyp:20F-04@cluster0.agwij.mongodb.net/smart_buy?retryWrites=true&w=majority";
 const localConnection = "mongodb://127.0.0.1:27017/admin";
 
 app.use(morgan("dev"));
@@ -19,7 +20,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 mongoose
-  .connect(localConnection, {
+  .connect(remoteConnection, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -33,6 +34,7 @@ mongoose
 app.use("/products", ProductRouter);
 app.use("/user", user_router);
 app.use("/auth", authRouter);
+app.use("/price-track", priceTrackerRouter)
 
 const PORT = process.env.PORT | 5000;
 

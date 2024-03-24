@@ -1,23 +1,23 @@
-import express from "express";
-import * as controller from "../controllers/product_controller.js";
-import authenticate from "../middleware/authenticate.js";
-import { log } from "../middleware/log_requests.js";
+const express = require("express");
+const controller = require("../controllers/product_controller.js");
+const authenticate = require("../middleware/authenticate.js");
+const { log } = require("../middleware/log_requests.js");
 
-const router = express.Router();
+const ProductRouter = express.Router();
 
-router.post("/save", authenticate, controller.save);
-router.get("/get", controller.get);
-router.get("/getById", controller.getById);
-router.get("/saveanarray", authenticate, controller.saveAnArray);
-router.delete("/deleteAllProducts", authenticate, controller.deleteAllProducts);
-router.get(
+ProductRouter.post("/save", authenticate, controller.save);
+ProductRouter.get("/get", controller.get);
+ProductRouter.get("/getById", controller.getById);
+ProductRouter.get("/saveanarray", authenticate, controller.saveAnArray);
+ProductRouter.delete("/deleteAllProducts", authenticate, controller.deleteAllProducts);
+ProductRouter.get(
   "/uploadproductsdatafromlocaldirectory",
   authenticate,
   controller.uploadAllData
 );
 
-router.get("/updateCategories", authenticate, controller.updateCategories);
-router.get("/getCategories", controller.getCategories);
-router.get("/getByCategory", controller.getByCategory);
+ProductRouter.get("/updateCategories", authenticate, controller.updateCategories);
+ProductRouter.get("/getCategories", controller.getCategories);
+ProductRouter.get("/getByCategory", controller.getByCategory);
 
-export default router;
+module.exports = {ProductRouter};

@@ -1,8 +1,8 @@
-import Category from "../models/categories.js";
-import Product from "../models/product.js";
-import { data } from "../testing/data.js";
+const Category = require("../models/categories.js");
+const Product = require("../models/product.js");
+const { data } = require("../testing/data.js");
 
-export const save = async (req, res) => {
+const save = async (req, res) => {
   try {
     const data = req.body;
     let product = await Product(data);
@@ -13,7 +13,7 @@ export const save = async (req, res) => {
   }
 };
 
-export const saveAnArray = async (req, res) => {
+const saveAnArray = async (req, res) => {
   try {
     const arrayOfData = req.body;
     for (let i = 0; i < arrayOfData.length; i++) {
@@ -26,7 +26,7 @@ export const saveAnArray = async (req, res) => {
   }
 };
 
-export const get = async (req, res) => {
+const get = async (req, res) => {
   try {
     let limit = req.query.limit || 12;
     let skip = req.query.skip || 0;
@@ -37,19 +37,24 @@ export const get = async (req, res) => {
   }
 };
 
-export const getById = async (req, res) => {
+const getById = async (req, res) => {
   try {
     const _id = req.query.id;
-    const data = await Product.find({
-      _id,
-    });
+    const data = _getById(_id);
     res.status(200).json(data);
   } catch (error) {
     res.status(400).json({ msg: "Operation Failed!", error: error.message });
   }
 };
+const _getById = async (id)=>{
+  const data = await Product.find({
+    _id:id,
+  });
+  return data[0];
+}
 
-export const getByCategory = async (req, res) => {
+
+const getByCategory = async (req, res) => {
   try {
     const category = req.query.category;
     const data = await Product.find({
@@ -61,7 +66,7 @@ export const getByCategory = async (req, res) => {
   }
 };
 
-export const uploadAllData = async (req, res) => {
+const uploadAllData = async (req, res) => {
   // This method uploads data from a local file in this project
   try {
     for (let i = 0; i < data.length; i++) {
@@ -74,7 +79,7 @@ export const uploadAllData = async (req, res) => {
   }
 };
 
-export const deleteAllProducts = async (req, res) => {
+const deleteAllProducts = async (req, res) => {
   try {
     const data = await Product.find();
     for (let i = 0; i < data.length; i++) {
@@ -87,7 +92,7 @@ export const deleteAllProducts = async (req, res) => {
   }
 };
 
-export const updateCategories = async (req, res) => {
+const updateCategories = async (req, res) => {
   let category = [];
   try {
     let data = await Product.find();
@@ -114,7 +119,7 @@ export const updateCategories = async (req, res) => {
   }
 };
 
-export const getCategories = async (req, res) => {
+const getCategories = async (req, res) => {
   try {
     let data = await Category.find();
     res.json(data);
@@ -122,3 +127,18 @@ export const getCategories = async (req, res) => {
     res.status(400).json({ error });
   }
 };
+
+
+
+module.exports = {
+  save,
+  saveAnArray,
+  get,
+  getById,
+  _getById,
+  getByCategory,
+  uploadAllData,
+  deleteAllProducts,
+  updateCategories,
+  getCategories,
+}

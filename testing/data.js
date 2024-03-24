@@ -1,4 +1,4 @@
-export const data = [
+const data = [
   {
     product_url: `https://www.shophive.com/apple-pencil-1st-generation-with-lightning-adapter-mqly3zm/`,
     title: `Apple Pencil 1st Generation With Lightning adapter (MQLY3ZM)`,
@@ -63521,3 +63521,4 @@ Full mechanical keys, high-speed responseConflict-free design for all keysSpill-
 ];
 
 console.log(data.length);
+module.exports = data

@@ -1,9 +1,12 @@
-import jwt from "jsonwebtoken";
-import { Constants } from "../constants.js";
+const jwt = require("jsonwebtoken");
+const { envFilePath } = require("../constants.js");
+require("dotenv").config({path:envFilePath})
 const authenticate = (req, res, next) => {
   try {
+
     const token = req.headers.authorization.split(" ")[1];
-    const decode = jwt.verify(token, Constants.jwt);
+    console.log(`Here is token: ${token}`)
+    const decode = jwt.verify(token, process.env.JWT);
     res.user = decode;
     console.log("Authentication successful!");
     next();
@@ -15,4 +18,4 @@ const authenticate = (req, res, next) => {
   }
 };
 
-export default authenticate;
+module.exports = authenticate;

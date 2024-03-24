@@ -1,8 +1,12 @@
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import User from "../models/user.js";
-import { Constants } from "../constants.js";
-export const register = (req, res) => {
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const User = require("../models/user.js");
+const { envFilePath } = require("../constants.js");
+require("dotenv").config({path:envFilePath})
+
+const jwtSecret = process.env.JWT
+
+const register = (req, res) => {
   try {
     const firstname = req.body.firstname;
     const lastname = req.body.lastname;
@@ -29,7 +33,7 @@ export const register = (req, res) => {
   }
 };
 
-export const login = (req, res) => {
+const login = (req, res) => {
   try {
     const username = req.body.username;
     const password = req.body.password;
@@ -39,11 +43,16 @@ export const login = (req, res) => {
         if (user) {
           bcrypt.compare(password, user.password, (err, result) => {
             if (result) {
-              const token = jwt.sign({ name: user.name }, Constants.jwt, {
+              const token = jwt.sign({ name: user.name }, jwtSecret, {
                 expiresIn: "1h",
               });
 
-              res.json({ status: true, email: user.email, token });
+              res.json({ 
+                id: user.id,
+                status: true, 
+                email: user.email, 
+                token 
+              });
             } else {
               res.status(400).json({ status: false, error: err });
             }
@@ -58,14 +67,20 @@ export const login = (req, res) => {
   }
 };
 
-export function verify_token(req, res) {
+function verify_token(req, res) {
   try {
     const token = req.query.token;
-    const decode = jwt.verify(token, Constants.jwt);
+    const decode = jwt.verify(token, jwtSecret);
     res.user = decode;
     res.status(200).json({ status: true });
   } catch (error) {
     console.log(error);
     res.status(400).json({ status: false, error });
   }
+}
+
+module.exports = {
+  register,
+  login,
+  verify_token,
 }

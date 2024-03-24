@@ -1,5 +1,5 @@
-import User from "../models/user.js";
-export const get = async (req, res) => {
+const User = require("../models/user.js");
+const get = async (req, res) => {
   try {
     const email = req.query.email;
     const data = await User.find({
@@ -10,3 +10,14 @@ export const get = async (req, res) => {
     res.status(400).json({ status: false, error });
   }
 };
+
+async function getUserById(id) {
+  try {
+    const data = await User.find({_id: id});
+    return data;
+  } catch (error) {
+    return null;
+  }
+};
+
+module.exports = {get, getUserById}
