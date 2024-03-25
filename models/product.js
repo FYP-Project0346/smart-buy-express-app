@@ -10,6 +10,7 @@ const productSchema = mongoose.Schema(
     desc: String,
     images: [String],
     ratings: Number,
+    site: String,
     spec: String,
     category: String,
   },

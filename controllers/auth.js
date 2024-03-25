@@ -15,7 +15,7 @@ const register = (req, res) => {
 
     bcrypt.hash(password, 10, (err, hashed) => {
       if (err) {
-        res.status(400).json({ msg: "Registration Failed", err });
+        res.status(400).json({code: 202});
         return;
       }
 
@@ -26,10 +26,10 @@ const register = (req, res) => {
         password: hashed,
       });
       user.save();
-      res.json({ msg: "true" });
+      res.json({code: 200});
     });
   } catch (error) {
-    res.status(400).json({ msg: "false", error });
+    res.status(400).json({code: 202});
   }
 };
 
@@ -49,21 +49,27 @@ const login = (req, res) => {
 
               res.json({ 
                 id: user.id,
-                status: true, 
+                code: 200, 
                 email: user.email, 
                 token 
               });
+              return
             } else {
-              res.status(400).json({ status: false, error: err });
+              res.json({code: 201});
+              return
             }
           });
+        }else{
+          res.json({code: 201})
         }
       })
       .catch((err) => {
-        res.status(400).json({ msg: "Login Failed!", error: err });
+        res.status(400).json({code: 202});
+        return;
       });
+      
   } catch (error) {
-    res.status(400).json({ msg: "Login Failed!", error });
+    res.status(400).json({code: 202});
   }
 };
 
@@ -72,10 +78,10 @@ function verify_token(req, res) {
     const token = req.query.token;
     const decode = jwt.verify(token, jwtSecret);
     res.user = decode;
-    res.status(200).json({ status: true });
+    res.json({code: 200});
   } catch (error) {
     console.log(error);
-    res.status(400).json({ status: false, error });
+    res.status(200).json({ code: 202 });
   }
 }
 

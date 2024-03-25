@@ -5,19 +5,20 @@ const { log } = require("../middleware/log_requests.js");
 
 const ProductRouter = express.Router();
 
-ProductRouter.post("/save", authenticate, controller.save);
-ProductRouter.get("/get", controller.get);
-ProductRouter.get("/getById", controller.getById);
-ProductRouter.get("/saveanarray", authenticate, controller.saveAnArray);
-ProductRouter.delete("/deleteAllProducts", authenticate, controller.deleteAllProducts);
+ProductRouter.post("/save", log, authenticate, controller.save);
+ProductRouter.get("/get", log, controller.get);
+ProductRouter.get("/getById", log, controller.getById);
+ProductRouter.get("/saveanarray", log, authenticate, controller.saveAnArray);
+ProductRouter.delete("/deleteAllProducts", log, authenticate, controller.deleteAllProducts);
 ProductRouter.get(
   "/uploadproductsdatafromlocaldirectory",
+  log,
   authenticate,
   controller.uploadAllData
 );
 
-ProductRouter.get("/updateCategories", authenticate, controller.updateCategories);
-ProductRouter.get("/getCategories", controller.getCategories);
-ProductRouter.get("/getByCategory", controller.getByCategory);
+ProductRouter.get("/updateCategories", log, authenticate, controller.updateCategories);
+ProductRouter.get("/getCategories", log, controller.getCategories);
+ProductRouter.get("/getByCategory", log, controller.getByCategory);
 
-module.exports = {ProductRouter};
+module.exports = { ProductRouter };

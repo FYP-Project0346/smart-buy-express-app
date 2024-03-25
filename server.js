@@ -12,7 +12,7 @@ const app = express();
 
 const remoteConnection =
   "mongodb+srv://fyp:20F-04@cluster0.agwij.mongodb.net/smart_buy?retryWrites=true&w=majority";
-const localConnection = "mongodb://127.0.0.1:27017/admin";
+const localConnection = "mongodb://127.0.0.1:27017/smartbuy";
 
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -20,7 +20,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 mongoose
-  .connect(remoteConnection, {
+  .connect(localConnection, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })

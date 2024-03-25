@@ -44,33 +44,50 @@ const get = async (req, res) => {
     let limit = req.query.limit || 12;
     let skip = req.query.skip || 0;
     let allowedSites = req.query.sites
+    try{allowedSites = JSON.parse(allowedSites)}catch(e){allowedSites = ["shophive"]}
     if (min > max){
-      res.status(400).json({error: "min value can't be greater than max"})
+      res.status(400).json({code: 203})
       return;
     }
     let data;
     if (max > 0 & min > 0){
-      data = await Product.find({
+      query = {
         price: {
           $lte: max,
           $gte: min,
+        },
+        site:{
+          $in: allowedSites
         }
-      }).skip(skip).limit(limit);;
+      }
     } else if (max > 0 & min === 0){
-      data = await Product.find({
+      query = {
         price: {
           $lte: max,
+        },
+        site:{
+          $in: allowedSites
         }
-      }).skip(skip).limit(limit);;
+      }
     } else if (max === 0 & min > 0){
-      data = await Product.find({
+      query = {
         price: {
           $gte: min,
+        },
+        site:{
+          $in: allowedSites
         }
-      }).skip(skip).limit(limit);
+      }
     } else{
-      data = await Product.find().skip(skip).limit(limit);;
+      query = {
+        site:{
+          $in: allowedSites
+        }
+      }
     }
+
+    data = await Product.find(query).skip(skip).limit(limit);
+
     res.json(data);
   } catch (error) {
     res.status(400).json({ error });
@@ -80,10 +97,10 @@ const get = async (req, res) => {
 const getById = async (req, res) => {
   try {
     const _id = req.query.id;
-    const data = _getById(_id);
+    const data = await _getById(_id);
     res.status(200).json(data);
   } catch (error) {
-    res.status(400).json({ msg: "Operation Failed!", error: error.message });
+    res.status(400).json({code: 202});
   }
 };
 

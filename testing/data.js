@@ -63522,4 +63522,4 @@ Full mechanical keys, high-speed responseConflict-free design for all keysSpill-
 ];
 
 console.log(data.length);
-module.exports = data
+module.exports = {data}
