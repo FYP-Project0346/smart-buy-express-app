@@ -26,11 +26,51 @@ const saveAnArray = async (req, res) => {
   }
 };
 
+// const get = async (req, res) => {
+//   try {
+//     let limit = req.query.limit || 12;
+//     let skip = req.query.skip || 0;
+//     let data = await Product.find().skip(skip).limit(limit);
+//     res.json(data);
+//   } catch (error) {
+//     res.status(400).json({ error });
+//   }
+// };
+
 const get = async (req, res) => {
   try {
+    let max = req.query.max || 0;
+    let min = req.query.min || 0;
     let limit = req.query.limit || 12;
     let skip = req.query.skip || 0;
-    let data = await Product.find().skip(skip).limit(limit);
+    let allowedSites = req.query.sites
+    if (min > max){
+      res.status(400).json({error: "min value can't be greater than max"})
+      return;
+    }
+    let data;
+    if (max > 0 & min > 0){
+      data = await Product.find({
+        price: {
+          $lte: max,
+          $gte: min,
+        }
+      }).skip(skip).limit(limit);;
+    } else if (max > 0 & min === 0){
+      data = await Product.find({
+        price: {
+          $lte: max,
+        }
+      }).skip(skip).limit(limit);;
+    } else if (max === 0 & min > 0){
+      data = await Product.find({
+        price: {
+          $gte: min,
+        }
+      }).skip(skip).limit(limit);
+    } else{
+      data = await Product.find().skip(skip).limit(limit);;
+    }
     res.json(data);
   } catch (error) {
     res.status(400).json({ error });
@@ -46,6 +86,7 @@ const getById = async (req, res) => {
     res.status(400).json({ msg: "Operation Failed!", error: error.message });
   }
 };
+
 const _getById = async (id)=>{
   const data = await Product.find({
     _id:id,
