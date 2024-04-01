@@ -44,14 +44,17 @@ const saveAnArray = async (req, res) => {
 
 const get = async (req, res) => {
   try {
-    let max = req.query.max || 0;
-    let min = req.query.min || 0;
-    let limit = req.query.limit || 12;
-    let skip = req.query.skip || 0;
-    let allowedSites = req.query.sites
-    let search = req.query.search || ""
-    search = req.query.search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replaceAll(" ", "|");
+    let reqdata = req.query
+    let max = reqdata.max || 0;
+    let min = reqdata.min || 0;
+    let limit = reqdata.limit || 12;
+    let skip = reqdata.skip || 0;
+    let allowedSites = reqdata.sites
+    let search = reqdata.search || ""
+    search = reqdata.search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replaceAll(" ", "|");
 
+    
+    
     try{
       allowedSites = JSON.parse(allowedSites)
       if (allowedSites = []){
@@ -61,7 +64,7 @@ const get = async (req, res) => {
       allowedSites = ["shophive"]
     }
     if (min > max){
-      res.status(400).json({code: 203})
+      res.status(200).json({code: 203})
       return;
     }
     let query;
