@@ -28,9 +28,14 @@ const saveAnArray = async (req, res) => {
 
 // const get = async (req, res) => {
 //   try {
-//     let limit = req.query.limit || 12;
-//     let skip = req.query.skip || 0;
-//     let data = await Product.find().skip(skip).limit(limit);
+//     let search = req.query.search.replaceAll(" ", "|")
+//     query = {
+//       title:{
+//         $regex:  search,
+//         $options: "i"
+//       }
+//     }
+//     let data = await Product.find(query)
 //     res.json(data);
 //   } catch (error) {
 //     res.status(400).json({ error });
@@ -44,12 +49,22 @@ const get = async (req, res) => {
     let limit = req.query.limit || 12;
     let skip = req.query.skip || 0;
     let allowedSites = req.query.sites
-    try{allowedSites = JSON.parse(allowedSites)}catch(e){allowedSites = ["shophive"]}
+    let search = req.query.search || ""
+    search = req.query.search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replaceAll(" ", "|");
+
+    try{
+      allowedSites = JSON.parse(allowedSites)
+      if (allowedSites = []){
+        allowedSites = ["shophive"]
+      }
+    }catch(e){
+      allowedSites = ["shophive"]
+    }
     if (min > max){
       res.status(400).json({code: 203})
       return;
     }
-    let data;
+    let query;
     if (max > 0 & min > 0){
       query = {
         price: {
@@ -86,7 +101,17 @@ const get = async (req, res) => {
       }
     }
 
-    data = await Product.find(query).skip(skip).limit(limit);
+    if (search !== ""){
+      query = {
+        ...query,
+        title: {
+          $regex: search,
+          $options: "i"
+        }
+      }
+    }
+
+    let data = await Product.find(query).skip(skip).limit(limit);
 
     res.json(data);
   } catch (error) {
