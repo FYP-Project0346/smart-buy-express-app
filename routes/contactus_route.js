@@ -8,7 +8,7 @@ const express = require("express")
 const contactus_route = express.Router()
 
 
-contactus_route.get("/save", save)
+contactus_route.post("/save", save)
 contactus_route.get("/get", get)
 contactus_route.delete("/delete", remove)
 
