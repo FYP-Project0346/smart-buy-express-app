@@ -14,9 +14,9 @@ const SendTestEmail = (req, res) => {
     `, "fake.mail.0346@gmail.com")
 
 
-        res.json({ msg: "Email Sent" })
+        res.json()
     } catch (e) {
-        res.status(400).json({ error: "Couldn't Send Email" })
+        res.status(400).json()
     }
 }
 
@@ -32,9 +32,13 @@ async function subscribe(req, res) {
 }
 
 async function check_tracking(req, res) {
-    const product_id = req.query.product_id
-    const track = await _check_tracking(product_id)
-    res.json({ data: track })
+    try{
+        const product_id = req.query.product_id
+        const track = await _check_tracking(product_id)
+        res.json({ data: track })
+    }catch(e){
+        res.status(400).json({})
+    }
 }
 
 async function _check_tracking(id) {

@@ -20,7 +20,7 @@ const saveAnArray = async (req, res) => {
       const product = await Product(arrayOfData[i]);
       await product.save();
     }
-    res.json({ msg: "All the data has been saved!" });
+    res.json({});
   } catch (error) {
     res.status(400).json({ error });
   }
@@ -64,7 +64,7 @@ const get = async (req, res) => {
       allowedSites = ["shophive"]
     }
     if (min > max){
-      res.status(200).json({code: 203})
+      res.status(203).json()
       return;
     }
     let query;
@@ -128,7 +128,7 @@ const getById = async (req, res) => {
     const data = await _getById(_id);
     res.status(200).json(data);
   } catch (error) {
-    res.status(400).json({code: 202});
+    res.status(400).json();
   }
 };
 
@@ -148,7 +148,7 @@ const getByCategory = async (req, res) => {
     });
     res.status(200).json(data);
   } catch (error) {
-    res.status(400).json({ msg: "Operation Failed!", error: error.message });
+    res.status(400).json({});
   }
 };
 
@@ -161,7 +161,7 @@ const uploadAllData = async (req, res) => {
     }
     res.json({ msg: "All the data has been saved" });
   } catch (error) {
-    res.status(400).json({ error });
+    res.status(400).json({});
   }
 };
 

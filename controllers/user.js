@@ -5,9 +5,9 @@ const get = async (req, res) => {
     const data = await User.find({
       email,
     });
-    res.status(200).json({ code: 200, data: data[0] });
+    res.status(200).json({ data: data[0] });
   } catch (error) {
-    res.status(400).json({ code: 202, error });
+    res.status(400).json({ error });
   }
 };
 

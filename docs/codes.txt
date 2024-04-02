@@ -1,0 +1,6 @@
+Code  --> DESC
+200   --> success
+201   --> Wrong Email and Password
+400   --> Operation Failed
+203   --> min value can't be greater than max
+204   --> Token Expired

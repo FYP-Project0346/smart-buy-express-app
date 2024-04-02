@@ -15,7 +15,7 @@ const register = (req, res) => {
 
     bcrypt.hash(password, 10, (err, hashed) => {
       if (err) {
-        res.status(400).json({code: 202});
+        res.status(400).json();
         return;
       }
 
@@ -26,10 +26,10 @@ const register = (req, res) => {
         password: hashed,
       });
       user.save();
-      res.json({code: 200});
+      res.json({});
     });
   } catch (error) {
-    res.status(400).json({code: 202});
+    res.status(400).json({});
   }
 };
 
@@ -49,27 +49,26 @@ const login = (req, res) => {
 
               res.json({ 
                 id: user.id,
-                code: 200, 
                 email: user.email, 
                 token 
               });
               return
             } else {
-              res.json({code: 201});
+              res.status(400).json({});
               return
             }
           });
         }else{
-          res.json({code: 201})
+          res.status(201).json({})
         }
       })
       .catch((err) => {
-        res.status(400).json({code: 202});
+        res.status(400).json();
         return;
       });
       
   } catch (error) {
-    res.status(400).json({code: 202});
+    res.status(400).json();
   }
 };
 
@@ -78,10 +77,10 @@ function verify_token(req, res) {
     const token = req.query.token;
     const decode = jwt.verify(token, jwtSecret);
     res.user = decode;
-    res.json({code: 200});
+    res.json();
   } catch (error) {
     console.log(error);
-    res.status(200).json({ code: 202 });
+    res.status(204).json();
   }
 }
 
