@@ -9,6 +9,8 @@ const schema = mongoose.Schema({
     cus_id: String
 })
 
-const ContactUsModel = mongoose.model("contactus", schmea)
+const ContactUsModel = mongoose.model("contactus", schema)
 
-export default model
+module.exports = {
+    ContactUsModel
+}
