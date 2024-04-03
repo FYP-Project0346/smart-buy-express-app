@@ -49,6 +49,8 @@ const login = (req, res) => {
 
               res.json({ 
                 id: user.id,
+                firstname: user.firstname,
+                lastname: user.lastname,
                 email: user.email, 
                 token 
               });
