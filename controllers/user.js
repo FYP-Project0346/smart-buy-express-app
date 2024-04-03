@@ -1,13 +1,13 @@
 const User = require("../models/user.js");
-const get = async (req, res) => {
+const getByEmail = async (req, res) => {
   try {
     const email = req.query.email;
     const data = await User.find({
       email,
     });
-    res.status(200).json({ data: data[0] });
+    res.status(200).json({code:200, data: data[0] });
   } catch (error) {
-    res.status(400).json({ error });
+    res.status(400).json({code:400, error });
   }
 };
 
@@ -20,4 +20,4 @@ async function getUserById(id) {
   }
 };
 
-module.exports = {get, getUserById}
+module.exports = {getByEmail, getUserById}

@@ -7,9 +7,9 @@ const save = async (req, res) => {
     const data = req.body;
     let product = await Product(data);
     await product.save();
-    res.json({});
+    res.json({code:200, msg:"Data Saved"});
   } catch (error) {
-    res.status(400).json({ error });
+    res.status(400).json({code:400, error });
   }
 };
 
@@ -20,9 +20,9 @@ const saveAnArray = async (req, res) => {
       const product = await Product(arrayOfData[i]);
       await product.save();
     }
-    res.json({});
+    res.json({code:200, msg:"Data Saved"});
   } catch (error) {
-    res.status(400).json({ error });
+    res.status(400).json({code:400, error });
   }
 };
 
@@ -116,9 +116,9 @@ const get = async (req, res) => {
 
     let data = await Product.find(query).skip(skip).limit(limit);
 
-    res.json(data);
+    res.json({code:200, data});
   } catch (error) {
-    res.status(400).json({ error });
+    res.status(400).json({code:400, error });
   }
 };
 
@@ -126,9 +126,9 @@ const getById = async (req, res) => {
   try {
     const _id = req.query.id;
     const data = await _getById(_id);
-    res.status(200).json(data);
+    res.status(200).json({code:200,data});
   } catch (error) {
-    res.status(400).json();
+    res.status(400).json({code: 400, msg: "some error occured"});
   }
 };
 
@@ -146,9 +146,9 @@ const getByCategory = async (req, res) => {
     const data = await Product.find({
       category,
     });
-    res.status(200).json(data);
+    res.status(200).json({code:200, data});
   } catch (error) {
-    res.status(400).json({});
+    res.status(400).json({code: 400, msg: "some error occured"});
   }
 };
 
@@ -159,9 +159,9 @@ const uploadAllData = async (req, res) => {
       const product = await Product(data[i]);
       await product.save();
     }
-    res.json({ msg: "All the data has been saved" });
+    res.json({code:200, msg: "All the data has been saved" });
   } catch (error) {
-    res.status(400).json({});
+    res.status(400).json({code:400, msg:"some unexpected error occured"});
   }
 };
 
@@ -172,9 +172,9 @@ const deleteAllProducts = async (req, res) => {
       await Product.findOneAndDelete({ _id: data[i]._id });
     }
 
-    res.status(200).json({ msg: "All the products has been deleted" });
+    res.status(200).json({code:200, msg: "All the products has been deleted" });
   } catch (error) {
-    res.status(400).json({ msg: "Operation Failed!", error: error.message });
+    res.status(400).json({code:400, msg: "Operation Failed!", error: error.message });
   }
 };
 
@@ -199,18 +199,18 @@ const updateCategories = async (req, res) => {
     //   await database.save();
     // }
 
-    res.json(category);
+    res.json({code:200, data:category});
   } catch (error) {
-    res.status(400).json({ error });
+    res.status(400).json({code:400, error });
   }
 };
 
 const getCategories = async (req, res) => {
   try {
     let data = await Category.find();
-    res.json(data);
+    res.json({code:200, data});
   } catch (error) {
-    res.status(400).json({ error });
+    res.status(400).json({code: 400, error });
   }
 };
 

@@ -4,10 +4,11 @@ const morgan = require("morgan");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const {ProductRouter} = require("./routes/product_routes.js");
-// const {user_router} = require("./routes/user.js");
+const {user_router} = require("./routes/user.js");
 const {authRouter} = require("./routes/auth.js");
 const {priceTrackerRouter} = require("./routes/price_tracker.js");
 const {contactus_route} = require("./routes/contactus_route.js")
+
 
 const app = express();
 
@@ -33,7 +34,7 @@ mongoose
   });
 
 app.use("/products", ProductRouter);
-// app.use("/user", user_router);
+app.use("/user", user_router);
 app.use("/auth", authRouter);
 app.use("/price-track", priceTrackerRouter)
 app.use("/contact", contactus_route)

@@ -14,9 +14,9 @@ const SendTestEmail = (req, res) => {
     `, "fake.mail.0346@gmail.com")
 
 
-        res.json()
+        res.json({code:200, msg: "Email Sent"})
     } catch (e) {
-        res.status(400).json()
+        res.status(400).json({code: 400, msg: "some error occured"})
     }
 }
 
@@ -25,9 +25,9 @@ async function subscribe(req, res) {
         const data = req.body
         const operation = await PriceTrackerModel(data)
         await operation.save();
-        res.json({})
+        res.json({code: 200, msg: "subscribed"})
     } catch (e) {
-        res.status(400).json({})
+        res.status(400).json({code: 400, msg: "some error occured"})
     }
 }
 
@@ -35,9 +35,9 @@ async function check_tracking(req, res) {
     try{
         const product_id = req.query.product_id
         const track = await _check_tracking(product_id)
-        res.json({ data: track })
+        res.json({code: 200,  data: track })
     }catch(e){
-        res.status(400).json({})
+        res.status(400).json({code: 400, msg: "some error occured"})
     }
 }
 
@@ -76,9 +76,9 @@ async function isSubscribed(req, res){
                 {product_id},
             ]
         })
-        res.json({subscribed: track.length != 0})
+        res.json({code: 200, subscribed: track.length != 0 ? "subscribed" : "unsubscribed"})
     }catch(e){
-        res.status(400).json({});
+        res.status(400).json({code: 400, msg: "Some error occured"});
     }
 }
 
@@ -92,9 +92,9 @@ async function unsubscribe(req, res){
                 {product_id},
             ]
         })
-        res.json({})
+        res.json({code: 200, msg: "unsubscribed"})
     }catch(e){
-        res.status(400).json({});
+        res.status(400).json({code: 400, msg: "some error occured"});
     }
 }
 

@@ -15,7 +15,7 @@ const register = (req, res) => {
 
     bcrypt.hash(password, 10, (err, hashed) => {
       if (err) {
-        res.status(400).json();
+        res.status(400).json({code:400, msg: "some error occured"});
         return;
       }
 
@@ -26,10 +26,10 @@ const register = (req, res) => {
         password: hashed,
       });
       user.save();
-      res.json({});
+      res.json({code:200, msg:"Data Saved"});
     });
   } catch (error) {
-    res.status(400).json({});
+    res.status(400).json({code: 400, msg: "Some error occured"});
   }
 };
 
@@ -48,6 +48,7 @@ const login = (req, res) => {
               });
 
               res.json({ 
+                code: 200,
                 id: user.id,
                 firstname: user.firstname,
                 lastname: user.lastname,
@@ -56,21 +57,20 @@ const login = (req, res) => {
               });
               return
             } else {
-              res.status(400).json({});
+              res.status(400).json({code: 400, msg: "some error occured"});
               return
             }
           });
         }else{
-          res.status(201).json({})
+          res.status(200).json({code: 201, msg: "Wrong Email or Password"})
         }
       })
       .catch((err) => {
-        res.status(400).json();
+        res.status(400).json({code: 400, msg: "some error occured"});
         return;
       });
-      
   } catch (error) {
-    res.status(400).json();
+    res.status(400).json({code: 400, msg: "Some error occured"});
   }
 };
 
@@ -79,10 +79,13 @@ function verify_token(req, res) {
     const token = req.query.token;
     const decode = jwt.verify(token, jwtSecret);
     res.user = decode;
-    res.json();
+    res.json({code:200,"msg": "verified"});
   } catch (error) {
     console.log(error);
-    res.status(204).json();
+    res.status(200).json({
+      code: "204",
+      msg: "token expired",
+    });
   }
 }
 
