@@ -3,6 +3,8 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/user.js");
 const { envFilePath } = require("../constants.js");
 require("dotenv").config({path:envFilePath})
+const {SendMail} = require("../general_functions/send_mail.js");
+const {generateRandomNumber} = require("../general_functions/general_functions.js")
 
 const jwtSecret = process.env.JWT
 
@@ -89,8 +91,31 @@ function verify_token(req, res) {
   }
 }
 
+async function verify_email(email){
+  const check = await User.find({email})
+  return check.length !== 0
+}
+
+async function sendPasswordResetEmail(req, res){
+  const email = req.body.email;
+  const verified = await verify_email(email);
+
+  if (verified){
+    const code = generateRandomNumber();
+    SendMail(`
+    <h1>Reset Password Request<h1>
+    <h2>Your OTP Code is: ${code}</h2>
+    <h4>Don't share this code.</h4>
+    `, email)
+    res.json({code: 200, msg:"Recovery Email Sent"})
+  }else{
+    res.json({code: 205, msg:"Email not found"})
+  }
+}
+
 module.exports = {
   register,
   login,
   verify_token,
+  sendPasswordResetEmail,
 }

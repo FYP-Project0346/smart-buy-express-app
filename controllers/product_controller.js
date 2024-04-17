@@ -52,8 +52,6 @@ const get = async (req, res) => {
     let allowedSites = reqdata.sites
     let search = reqdata.search || ""
     search = reqdata.search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replaceAll(" ", "|");
-
-    
     
     try{
       allowedSites = JSON.parse(allowedSites)
@@ -63,8 +61,8 @@ const get = async (req, res) => {
     }catch(e){
       allowedSites = ["shophive"]
     }
-    if (min > max){
-      res.status(203).json()
+    if (parseInt(min) > parseInt(max)){
+      res.json({code: 203, msg: "min price is greater than max"})
       return;
     }
     let query;
@@ -114,7 +112,7 @@ const get = async (req, res) => {
       }
     }
 
-    let data = await Product.find(query).skip(skip).limit(limit);
+    let data = await Product.find(query).skip(skip).limit(limit).sort({ratings: -1, price: 1});
 
     res.json({code:200, data});
   } catch (error) {
