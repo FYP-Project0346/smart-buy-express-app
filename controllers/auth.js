@@ -115,14 +115,10 @@ async function sendPasswordResetEmail(req, res) {
       <h4>Don't share this code.</h4>
     `, email);
 
-
-
     setTimeout(()=>{
       resetPasswordRequests.filter((items) => items.email != email)
     }, 300000);
-
-
-
+    
     res.json({ code: 200, msg: "Recovery Email Sent" })
   } else {
     res.json({ code: 205, msg: "Email not found" })
