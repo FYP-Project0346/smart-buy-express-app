@@ -106,7 +106,8 @@ const get = async (req, res) => {
       }
     }
 
-    let data = await Product.find(query).skip(skip).limit(limit).sort({ratings: -1, price: 1});
+
+    let data = await Product.find(query).sort({ratings: -1, price: 1}).skip(skip).limit(limit);
 
     res.json({code:200, data});
   } catch (error) {
