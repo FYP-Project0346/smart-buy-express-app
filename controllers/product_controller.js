@@ -28,14 +28,7 @@ const saveAnArray = async (req, res) => {
 
 // const get = async (req, res) => {
 //   try {
-//     let search = req.query.search.replaceAll(" ", "|")
-//     query = {
-//       title:{
-//         $regex:  search,
-//         $options: "i"
-//       }
-//     }
-//     let data = await Product.find(query)
+//     let data = await Product.find()
 //     res.json(data);
 //   } catch (error) {
 //     res.status(400).json({ error });
@@ -53,13 +46,14 @@ const get = async (req, res) => {
     let search = reqdata.search || ""
     search = reqdata.search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replaceAll(" ", "|");
     
+    const defaultAllowedSites = ["shophive","priceoye"] ;
     try{
       allowedSites = JSON.parse(allowedSites)
       if (allowedSites = []){
-        allowedSites = ["shophive"]
+        allowedSites = defaultAllowedSites
       }
     }catch(e){
-      allowedSites = ["shophive"]
+      allowedSites = defaultAllowedSites
     }
     if (parseInt(min) > parseInt(max)){
       res.json({code: 203, msg: "min price is greater than max"})

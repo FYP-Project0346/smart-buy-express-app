@@ -5,3 +5,5 @@ Code  --> DESC
 203   --> min value can't be greater than max
 204   --> Token Expired
 205   --> email not found
+206   --> password field can't be empty
+207   --> Wrong provided OTP
