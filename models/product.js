@@ -13,6 +13,7 @@ const productSchema = mongoose.Schema(
     site: String,
     spec: String,
     category: String,
+    deal_available: Boolean,
   },
   { timestamps: true }
 );

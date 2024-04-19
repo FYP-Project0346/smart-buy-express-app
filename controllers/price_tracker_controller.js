@@ -49,16 +49,15 @@ async function _check_tracking(id) {
 
     await Promise.all(
         track.map(async (e) => {
-            if (product.price >= e.price) {
+            if (product.deal_available) {
                 return
             }
             let user = await userController.getUserById(e.customer_id)
             user = user[0]
             await sendMail.SendMail(`
             <h1>Dear ${user.firstname} ${user.lastname}</h1>
-            <h2>The Price of Product "${product.title}" has come low.</h2>
-            <h2>now it's price is: <span style="color:blue">${product.price}</span></h2>
-            <h3>Follow this link to buy: LINK NEEDS TO BE PROVIDED</h3>
+            <h2>There is deal available for product "${product.title}"</h2>
+            <h3>Follow this link to buy: ${product.product_url}</h3>
             `, user.email)
             data.push(user.email)
         })
