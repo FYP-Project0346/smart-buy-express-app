@@ -46,10 +46,10 @@ const get = async (req, res) => {
     let search = reqdata.search || ""
     search = reqdata.search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replaceAll(" ", "|");
     
-    const defaultAllowedSites = ["shophive","priceoye"] ;
+    const defaultAllowedSites = ["shophive","priceoye","iShopping"] ;
     try{
       allowedSites = JSON.parse(allowedSites)
-      if (allowedSites = []){
+      if (allowedSites == []){
         allowedSites = defaultAllowedSites
       }
     }catch(e){
@@ -106,7 +106,7 @@ const get = async (req, res) => {
       }
     }
 
-
+    
     let data = await Product.find(query).sort({ratings: -1, price: 1}).skip(skip).limit(limit);
 
     res.json({code:200, data});
