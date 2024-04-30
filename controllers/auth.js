@@ -38,9 +38,12 @@ const register = (req, res) => {
 };
 
 const login = (req, res) => {
+  console.log("Login Fired")
   try {
     const username = req.body.username;
     const password = req.body.password;
+    console.log(username)
+    console.log(password)
 
     User.findOne({ $or: [{ email: username }, { phone: username }] })
       .then((user) => {

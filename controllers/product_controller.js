@@ -36,6 +36,7 @@ const saveAnArray = async (req, res) => {
 // };
 
 const get = async (req, res) => {
+  console.log("Getting products fired")
   try {
     let reqdata = req.query
     let max = reqdata.max || 0
@@ -54,7 +55,6 @@ const get = async (req, res) => {
       allowedSites = JSON.parse(allowedSites)
 
       if (allowedSites.length === 0) {
-        console.log('allowedSites are empty')
         allowedSites = defaultAllowedSites
       }
     } catch (e) {
