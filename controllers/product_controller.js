@@ -36,7 +36,6 @@ const saveAnArray = async (req, res) => {
 // };
 
 const get = async (req, res) => {
-  console.log("Getting products fired")
   try {
     let reqdata = req.query
     let max = reqdata.max || 0
