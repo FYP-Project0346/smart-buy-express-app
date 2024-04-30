@@ -14,7 +14,7 @@ const {linkRouter} = require("./routes/link.js")
 const app = express();
 
 const remoteConnection =
-  "mongodb+srv://fyp:20F-04@cluster0.agwij.mongodb.net/smart_buy?retryWrites=true&w=majority";
+  "mongodb+srv://fyp:20F-04@cluster0.agwij.mongodb.net/smartbuy?retryWrites=true&w=majority";
 const localConnection = "mongodb://127.0.0.1:27017/smartbuy";
 
 app.use(morgan("dev"));
@@ -23,7 +23,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 mongoose
-  .connect(localConnection, {
+  .connect(remoteConnection, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
