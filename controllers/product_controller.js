@@ -38,82 +38,91 @@ const saveAnArray = async (req, res) => {
 const get = async (req, res) => {
   try {
     let reqdata = req.query
-    let max = reqdata.max || 0;
-    let min = reqdata.min || 0;
-    let limit = reqdata.limit || 12;
-    let skip = reqdata.skip || 0;
+    let max = reqdata.max || 0
+    let min = reqdata.min || 0
+    let limit = reqdata.limit || 12
+    let skip = reqdata.skip || 0
     let allowedSites = reqdata.sites
-    let search = reqdata.search || ""
-    search = reqdata.search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replaceAll(" ", "|");
-    
-    const defaultAllowedSites = ["shophive","priceoye","iShopping"] ;
-    try{
+    let search = reqdata.search || ''
+    search = reqdata.search
+      .trim()
+      .replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+      .replaceAll(' ', '|')
+
+    const defaultAllowedSites = ['shophive', 'priceoye', 'iShopping']
+    try {
       allowedSites = JSON.parse(allowedSites)
-      if (allowedSites == []){
+
+      if (allowedSites.length === 0) {
+        console.log('allowedSites are empty')
         allowedSites = defaultAllowedSites
       }
-    }catch(e){
+    } catch (e) {
+      console.log('Error in parsing the data')
       allowedSites = defaultAllowedSites
     }
-    if (parseInt(min) > parseInt(max)){
-      res.json({code: 203, msg: "min price is greater than max"})
-      return;
+
+    if (parseInt(min) > parseInt(max)) {
+      res.json({ code: 203, msg: 'min price is greater than max' })
+      return
     }
-    let query;
-    if (max > 0 & min > 0){
+    let query
+    if ((max > 0) & (min > 0)) {
       query = {
         price: {
           $lte: max,
           $gte: min,
         },
-        site:{
-          $in: allowedSites
-        }
+        site: {
+          $in: allowedSites,
+        },
       }
-    } else if (max > 0 & min === 0){
+    } else if ((max > 0) & (min === 0)) {
       query = {
         price: {
           $lte: max,
         },
-        site:{
-          $in: allowedSites
-        }
+        site: {
+          $in: allowedSites,
+        },
       }
-    } else if (max === 0 & min > 0){
+    } else if ((max === 0) & (min > 0)) {
       query = {
         price: {
           $gte: min,
         },
-        site:{
-          $in: allowedSites
-        }
+        site: {
+          $in: allowedSites,
+        },
       }
-    } else{
+    } else {
       query = {
-        site:{
-          $in: allowedSites
-        }
+        site: {
+          $in: allowedSites,
+        },
       }
     }
 
-    if (search !== ""){
+    if (search !== '') {
       query = {
         ...query,
         title: {
           $regex: search,
-          $options: "i"
-        }
+          $options: 'i',
+        },
       }
     }
 
-    
-    let data = await Product.find(query).sort({ratings: -1, price: 1}).skip(skip).limit(limit);
+    let data = await Product.find(query)
+      .sort({ ratings: -1, price: 1 })
+      .skip(skip)
+      .limit(limit)
 
-    res.json({code:200, data});
+    res.json({ code: 200, data })
   } catch (error) {
-    res.status(400).json({code:400, error });
+    res.status(400).json({ code: 400, error })
   }
-};
+}
 
 const getById = async (req, res) => {
   try {

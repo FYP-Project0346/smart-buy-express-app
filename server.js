@@ -8,6 +8,7 @@ const {user_router} = require("./routes/user.js");
 const {authRouter} = require("./routes/auth.js");
 const {priceTrackerRouter} = require("./routes/price_tracker.js");
 const {contactus_route} = require("./routes/contactus_route.js")
+const {linkRouter} = require("./routes/link.js")
 
 
 const app = express();
@@ -38,6 +39,7 @@ app.use("/user", user_router);
 app.use("/auth", authRouter);
 app.use("/price-track", priceTrackerRouter)
 app.use("/contact", contactus_route)
+app.use("/links", linkRouter)
 
 const PORT = process.env.PORT | 5000;
 
