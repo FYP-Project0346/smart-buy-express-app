@@ -22,7 +22,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 mongoose
-  .connect(localConnection, {
+  .connect(remoteConnection, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
