@@ -2,7 +2,7 @@
 const nodemailer = require("nodemailer")
 const env = require("dotenv")
 
-async function SendMail(html, receiver) {
+async function SendMail(subject, html, receiver) {
     env.config({path: "./../.env"})
     console.log(process.env.USER)
 
@@ -24,7 +24,7 @@ async function SendMail(html, receiver) {
         address: process.env.USER
     }, // sender address
     to: receiver, // list of receivers
-    subject: "Welcome to SmartBuy", // Subject line
+    subject: subject, // Subject line
     // text: "Hello world?, Text", // plain text body
     html: html, // html body
   });

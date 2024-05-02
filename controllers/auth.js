@@ -108,7 +108,9 @@ async function sendPasswordResetEmail(req, res) {
       code,
     });
 
-    await SendMail(`
+    await SendMail(
+      "Welcome to SmartBuy",
+      `
       <h1>Reset Password Request<h1>
       <h2>Your OTP Code is: ${code}</h2>
       <h4>This code is valid only for 5 minutes.<h4>

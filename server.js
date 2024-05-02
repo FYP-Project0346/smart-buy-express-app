@@ -10,7 +10,6 @@ const {priceTrackerRouter} = require("./routes/price_tracker.js");
 const {contactus_route} = require("./routes/contactus_route.js")
 const {linkRouter} = require("./routes/link.js")
 
-
 const app = express();
 
 const remoteConnection =
@@ -23,7 +22,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 mongoose
-  .connect(remoteConnection, {
+  .connect(localConnection, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
