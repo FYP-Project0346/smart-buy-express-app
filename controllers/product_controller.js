@@ -49,7 +49,7 @@ const get = async (req, res) => {
       .replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
       .replaceAll(' ', '|')
 
-    const defaultAllowedSites = ['shophive', 'priceoye', 'iShopping']
+    const defaultAllowedSites = ['shophive', 'priceoye', 'iShopping', 'bucket.pk', 'HomeShopping']
     try {
       allowedSites = JSON.parse(allowedSites)
 
