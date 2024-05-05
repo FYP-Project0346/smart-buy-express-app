@@ -102,13 +102,24 @@ const get = async (req, res) => {
       }
     }
 
+
     if (search !== '') {
       query = {
         ...query,
-        title: {
-          $regex: search,
-          $options: 'i',
-        },
+        $or: [
+          {
+            title: {
+              $regex: search,
+              $options: 'i',
+            },
+          },
+          {
+            category: {
+              $regex: search,
+              $options: 'i',
+            },
+          }
+        ]
       }
     }
 
