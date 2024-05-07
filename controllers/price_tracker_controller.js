@@ -99,7 +99,8 @@ async function _check_tracking(id) {
   }
 
   const updateDeal = async (req, res)=>{
-    const dealStatus = req.body.dealStatus
+    try{
+        const dealStatus = req.body.dealStatus
     const id = req.body.id
     const updatedProduct = await Product.findOneAndUpdate(
       { _id: id },
@@ -113,6 +114,10 @@ async function _check_tracking(id) {
     );
     await _check_tracking(id);
     res.json({code: 200, msg: "updated", user: updatedProduct});
+    }catch(e){
+        console.log(`Error: update deal function/price tracker controller: ${e}`)
+        res.json({code: 400, msg: `Some error occured in update deal function ${e}`})
+    }
   }
 
 
