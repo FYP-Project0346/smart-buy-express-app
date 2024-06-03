@@ -190,6 +190,18 @@ const deleteAllProducts = async (req, res) => {
   }
 };
 
+const deleteProduct = async (req, res) => {
+  try {
+      const id = req.query.id;
+      await Product.findOneAndDelete({ _id: id });
+    
+
+    res.status(200).json({code:200, msg: "Products has been deleted" });
+  } catch (error) {
+    res.status(400).json({code:400, msg: "Operation Failed!", error: error.message });
+  }
+};
+
 const updateCategories = async (req, res) => {
   let category = [];
   try {
@@ -220,7 +232,7 @@ const updateCategories = async (req, res) => {
 const getCategories = async (req, res) => {
   try {
     let data = await Category.find();
-    res.json({code:200, data});
+    res.json({code:200, categories: data});
   } catch (error) {
     res.status(400).json({code: 400, error });
   }
@@ -239,4 +251,5 @@ module.exports = {
   deleteAllProducts,
   updateCategories,
   getCategories,
+  deleteProduct,
 }

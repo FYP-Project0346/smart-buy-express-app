@@ -20,5 +20,6 @@ ProductRouter.get(
 ProductRouter.get("/updateCategories", log, authenticate, controller.updateCategories);
 ProductRouter.get("/getCategories", log, controller.getCategories);
 ProductRouter.get("/getByCategory", log, controller.getByCategory);
+ProductRouter.delete("/delete-product", log, controller.deleteProduct);
 
 module.exports = { ProductRouter };

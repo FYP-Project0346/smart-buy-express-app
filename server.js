@@ -9,6 +9,7 @@ const {authRouter} = require("./routes/auth.js");
 const {priceTrackerRouter} = require("./routes/price_tracker.js");
 const {contactus_route} = require("./routes/contactus_route.js")
 const {linkRouter} = require("./routes/link.js")
+const {admin_route} = require("./routes/admin.js")
 
 const app = express();
 
@@ -22,7 +23,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 mongoose
-  .connect(remoteConnection, {
+  .connect(localConnection, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -39,6 +40,7 @@ app.use("/auth", authRouter);
 app.use("/price-track", priceTrackerRouter)
 app.use("/contact", contactus_route)
 app.use("/links", linkRouter)
+app.use("/admin", admin_route)
 
 const PORT = process.env.PORT | 5000;
 
